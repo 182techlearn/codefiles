@@ -1,0 +1,16 @@
+FROM amazoncorretto:17
+
+RUN yum install -y tar gzip && \
+    yum clean all
+
+RUN mkdir -p /opt/tomcat
+
+WORKDIR /opt/tomcat
+
+RUN curl -L https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.123/bin/apache-tomcat-9.0.123.tar.gz -o tomcat.tar.gz && \
+    tar -xzf tomcat.tar.gz --strip-components=1 && \
+    rm -f tomcat.tar.gz
+
+EXPOSE 8080
+
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
